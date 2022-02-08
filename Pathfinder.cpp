@@ -85,6 +85,7 @@ string Pathfinder::toString() const
 
 vector<string> Pathfinder::solveMaze()
 {
+	solution.clear();
 	find_maze_path(maze_backup, 0, 0, 0);
 	reverse(solution.begin(), solution.end());
 	for (auto s : solution)
@@ -97,8 +98,8 @@ vector<string> Pathfinder::solveMaze()
 
 bool Pathfinder::find_maze_path(int grid[ROW_SIZE][COL_SIZE][DEPTH_SIZE], int r, int c, int d)
 {
-	 cout << "find_maze_path [" << r << "][" << c << "][" << d << "]" << endl;
-	 cout << this->toString();
+	//  cout << "find_maze_path [" << r << "][" << c << "][" << d << "]" << endl;
+	//  cout << this->toString();
 
 	if (r < 0 || c < 0 || d < 0 || r > 4 || c > 4 || d > 4)
 		return false; // Cell is out of bounds.
@@ -140,4 +141,32 @@ bool Pathfinder::find_maze_path(int grid[ROW_SIZE][COL_SIZE][DEPTH_SIZE], int r,
 }
 void Pathfinder::createRandomMaze()
 {
+	for (int depth = 0; depth < DEPTH_SIZE; depth++)
+		{
+			for (int row = 0; row < ROW_SIZE; row++)
+			{
+				for (int col = 0; col < COL_SIZE; col++)
+				{
+					if (col == 0 && row == 0 && depth == 0 ){
+						new_maze[0][0][0] = 1;
+						cout << "starting new maze" << endl << '1' << endl;
+					}
+					else if (col == 4 && row == 4 && depth == 4){
+						new_maze[4][4][4] = 1;
+						cout << "new maze finished" << '1' << endl;
+					}
+					else {
+						int randomNum = rand() % 2; 
+						cout << randomNum << endl;
+						new_maze[row][col][depth] = randomNum;
+
+					}
+
+				}
+			}
+		}	
+	// if (!find_maze_path(new_maze, 0 , 0, 0)){
+		
+	// 	createRandomMaze();
+	// }	
 }
