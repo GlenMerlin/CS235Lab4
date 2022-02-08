@@ -26,7 +26,19 @@ class Pathfinder: public PathfinderInterface {
     vector<string> solution;
   public:
     Pathfinder() {
-      srand (time(NULL));
+      srand (time(0));
+    for (int depth = 0; depth < DEPTH_SIZE; depth++)
+		{
+			for (int row = 0; row < ROW_SIZE; row++)
+			{
+				for (int col = 0; col < COL_SIZE; col++)
+				{
+					
+					maze_grid[row][col][depth] = 1;
+
+				}
+			}
+		}	
     }
     ~Pathfinder() {
 

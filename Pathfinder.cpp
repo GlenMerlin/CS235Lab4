@@ -148,17 +148,17 @@ void Pathfinder::createRandomMaze()
 				for (int col = 0; col < COL_SIZE; col++)
 				{
 					if (col == 0 && row == 0 && depth == 0 ){
-						new_maze[0][0][0] = 1;
+						maze_grid[0][0][0] = 1;
 						cout << "starting new maze" << endl << '1' << endl;
 					}
 					else if (col == 4 && row == 4 && depth == 4){
-						new_maze[4][4][4] = 1;
+						maze_grid[4][4][4] = 1;
 						cout << "new maze finished" << '1' << endl;
 					}
 					else {
 						int randomNum = rand() % 2; 
 						cout << randomNum << endl;
-						new_maze[row][col][depth] = randomNum;
+						maze_grid[row][col][depth] = randomNum;
 
 					}
 
