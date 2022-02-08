@@ -1,4 +1,5 @@
 #include "Pathfinder.h"
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -14,7 +15,6 @@ bool Pathfinder::importMaze(string file_name)
 	if (line_count != 29){
 		return false;
 	}
-	cout << line_count << endl;
 	ifstream file(file_name.c_str());
 	if (file.is_open())
 	{
@@ -47,7 +47,8 @@ bool Pathfinder::importMaze(string file_name)
 					if (value == 0 || value == 1)
 					{
 						// cout << "["<<row<<"]["<<col<<"]["<<depth<<"]="<<value<<endl;
-						maze_grid[row][col][depth] = value;	
+						maze_grid[row][col][depth] = value;
+						maze_backup[row][col][depth] = value;
 					}
 					else {
 						return false;
@@ -84,30 +85,32 @@ string Pathfinder::toString() const
 
 vector<string> Pathfinder::solveMaze()
 {
-	find_maze_path(maze_grid, 0, 0, 0);
+	find_maze_path(maze_backup, 0, 0, 0);
+	reverse(solution.begin(), solution.end());
 	for (auto s : solution)
 	{
-		// cout << s << endl;
+		cout << s << endl;
 	}
 	return solution;
 }
 
-void Pathfinder::createRandomMaze()
-{
-}
 
 bool Pathfinder::find_maze_path(int grid[ROW_SIZE][COL_SIZE][DEPTH_SIZE], int r, int c, int d)
 {
-	// cout << "find_maze_path [" << r << "][" << c << "][" << d << "]" << endl;
-	// cout << this->toString();
-	if (r < 0 || c < 0 || d < 0 || r >= ROW_SIZE || c >= COL_SIZE || d >= DEPTH_SIZE)
+	 cout << "find_maze_path [" << r << "][" << c << "][" << d << "]" << endl;
+	 cout << this->toString();
+
+	if (r < 0 || c < 0 || d < 0 || r > 4 || c > 4 || d > 4)
 		return false; // Cell is out of bounds.
+	
 	else if (grid[r][c][d] != BACKGROUND)
 		return false; // Cell is on barrier or dead end.
-	else if (r == ROW_SIZE - 1 && c == COL_SIZE - 1 && d == DEPTH_SIZE - 1)
+
+	// Exit if the exit is found	
+	else if (r == 4 && c == 4 && d == 4)
 	{
 		grid[r][c][d] = PATH; // Cell is on path
-		solution.push_back("(" + to_string(r) + "," + to_string(c) + "," + to_string(d) + ")");
+		solution.push_back("(" + to_string(c) + ", " + to_string(r) + ", " + to_string(d) + ")");
 		return true; // and is maze exit.
 	}
 	else
@@ -124,7 +127,7 @@ bool Pathfinder::find_maze_path(int grid[ROW_SIZE][COL_SIZE][DEPTH_SIZE], int r,
 			|| find_maze_path(grid, r, c, d - 1) // Back
 		)
 		{
-			solution.push_back("(" + to_string(r) + "," + to_string(c) + "," + to_string(d) + ")");
+			solution.push_back("(" + to_string(c) + ", " + to_string(r) + ", " + to_string(d) + ")");
 			return true;
 		}
 		else
@@ -134,4 +137,7 @@ bool Pathfinder::find_maze_path(int grid[ROW_SIZE][COL_SIZE][DEPTH_SIZE], int r,
 		}
 	}
 	return false;
+}
+void Pathfinder::createRandomMaze()
+{
 }

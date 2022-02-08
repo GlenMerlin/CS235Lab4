@@ -20,6 +20,7 @@ class Pathfinder: public PathfinderInterface {
     const int TEMPORARY = 2; // Used to show this path has been explored
     const int PATH = 3;
     int maze_grid[ROW_SIZE][COL_SIZE][DEPTH_SIZE]; // To hold values
+    int maze_backup[ROW_SIZE][COL_SIZE][DEPTH_SIZE];
     vector<string> solution;
   public:
     Pathfinder() {
