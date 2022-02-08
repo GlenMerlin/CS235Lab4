@@ -6,21 +6,24 @@ using namespace std;
 bool Pathfinder::importMaze(string file_name)
 {
 	cout << "importMaze from " << file_name << endl;
-	ifstream checkfile(file_name.c_str());
+	
+	ifstream checkfile(file_name);
 	string checklines;
+	
 	int line_count = 0;
 	while (getline(checkfile, checklines)){
 		line_count++;
 	}
+
 	if (line_count != 29){
 		return false;
 	}
-	ifstream file(file_name.c_str());
+	
+	ifstream file(file_name);
+	
 	if (file.is_open())
 	{
 		string line;
-		int row_count = 0;
-		
 		
 		for (int depth = 0; depth < DEPTH_SIZE; depth++)
 		{
@@ -28,12 +31,14 @@ bool Pathfinder::importMaze(string file_name)
 			{
 				
 				getline(file, line);
+				
 				if (line.length()==0){
 					getline(file, line);
 				}
+				
 				stringstream ss(line);
 				stringstream checkss(line);
-				row_count++;
+				
 				for (int col = 0; col < COL_SIZE; col++)
 				{
 					string check;
@@ -46,7 +51,6 @@ bool Pathfinder::importMaze(string file_name)
 					
 					if (value == 0 || value == 1)
 					{
-						// cout << "["<<row<<"]["<<col<<"]["<<depth<<"]="<<value<<endl;
 						maze_grid[row][col][depth] = value;
 						maze_backup[row][col][depth] = value;
 					}
@@ -78,6 +82,9 @@ string Pathfinder::toString() const
 			}
 			ss << endl;
 		}
+		if (depth == DEPTH_SIZE -1){
+			continue;
+		}
 		ss << endl;
 	}
 	return ss.str();
@@ -88,18 +95,11 @@ vector<string> Pathfinder::solveMaze()
 	solution.clear();
 	find_maze_path(maze_backup, 0, 0, 0);
 	reverse(solution.begin(), solution.end());
-	for (auto s : solution)
-	{
-		cout << s << endl;
-	}
 	return solution;
 }
 
-
 bool Pathfinder::find_maze_path(int grid[ROW_SIZE][COL_SIZE][DEPTH_SIZE], int r, int c, int d)
 {
-	//  cout << "find_maze_path [" << r << "][" << c << "][" << d << "]" << endl;
-	//  cout << this->toString();
 
 	if (r < 0 || c < 0 || d < 0 || r > 4 || c > 4 || d > 4)
 		return false; // Cell is out of bounds.
@@ -139,30 +139,24 @@ bool Pathfinder::find_maze_path(int grid[ROW_SIZE][COL_SIZE][DEPTH_SIZE], int r,
 	}
 	return false;
 }
+
 void Pathfinder::createRandomMaze()
 {
 	for (int depth = 0; depth < DEPTH_SIZE; depth++)
+	{
+		for (int row = 0; row < ROW_SIZE; row++)
 		{
-			for (int row = 0; row < ROW_SIZE; row++)
+			for (int col = 0; col < COL_SIZE; col++)
 			{
-				for (int col = 0; col < COL_SIZE; col++)
-				{
-					if (col == 0 && row == 0 && depth == 0 ){
-						maze_grid[0][0][0] = 1;
-						cout << "starting new maze" << endl << '1' << endl;
-					}
-					else if (col == 4 && row == 4 && depth == 4){
-						maze_grid[4][4][4] = 1;
-						cout << "new maze finished" << '1' << endl;
-					}
-					else {
-						int randomNum = rand() % 2; 
-						cout << randomNum << endl;
-						maze_grid[row][col][depth] = randomNum;
-
-					}
-
+				if (col == 0 && row == 0 && depth == 0 || col == 4 && row == 4 && depth == 4){
+					maze_grid[row][col][depth] = 1;
 				}
+				else{
+					int randomNum = rand() % 2; 
+
+					maze_grid[row][col][depth] = randomNum;
+				}	
 			}
-		}	
+		}
+	}
 }

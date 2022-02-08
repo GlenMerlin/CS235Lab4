@@ -27,22 +27,18 @@ class Pathfinder: public PathfinderInterface {
   public:
     Pathfinder() {
       srand (time(0));
-    for (int depth = 0; depth < DEPTH_SIZE; depth++)
-		{
-			for (int row = 0; row < ROW_SIZE; row++)
-			{
-				for (int col = 0; col < COL_SIZE; col++)
-				{
+      for (int depth = 0; depth < DEPTH_SIZE; depth++){
+			  for (int row = 0; row < ROW_SIZE; row++){
+				  for (int col = 0; col < COL_SIZE; col++){
 					
-					maze_grid[row][col][depth] = 1;
+					  maze_grid[row][col][depth] = 1;
 
-				}
-			}
-		}	
+  				}
+	  		}
+		  }	
     }
-    ~Pathfinder() {
-
-    }
+    ~Pathfinder() {}
+    
     string toString() const;
     void createRandomMaze();
     bool importMaze(string file_name);

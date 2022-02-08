@@ -1,2 +1,2 @@
 main:
-	g++ -o maze main.cpp Pathfinder.cpp
+	g++ -o path_finder main.cpp Pathfinder.cpp
