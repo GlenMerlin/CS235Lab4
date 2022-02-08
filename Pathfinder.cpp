@@ -165,8 +165,4 @@ void Pathfinder::createRandomMaze()
 				}
 			}
 		}	
-	// if (!find_maze_path(new_maze, 0 , 0, 0)){
-		
-	// 	createRandomMaze();
-	// }	
 }
