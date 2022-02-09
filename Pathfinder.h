@@ -22,7 +22,6 @@ class Pathfinder: public PathfinderInterface {
     const int PATH = 3;
     int maze_grid[ROW_SIZE][COL_SIZE][DEPTH_SIZE]; // To hold values
     int maze_backup[ROW_SIZE][COL_SIZE][DEPTH_SIZE];
-    int new_maze[ROW_SIZE][COL_SIZE][DEPTH_SIZE];
     vector<string> solution;
   public:
     Pathfinder() {

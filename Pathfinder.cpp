@@ -78,7 +78,13 @@ string Pathfinder::toString() const
 		{
 			for (int col = 0; col < COL_SIZE; col++)
 			{
-				ss << maze_grid[row][col][depth] << " ";
+				if (col != 4){
+					ss << maze_grid[row][col][depth] << " ";
+				}
+				else {
+					ss << maze_grid[row][col][depth];
+				}
+
 			}
 			ss << endl;
 		}
@@ -142,6 +148,8 @@ bool Pathfinder::find_maze_path(int grid[ROW_SIZE][COL_SIZE][DEPTH_SIZE], int r,
 
 void Pathfinder::createRandomMaze()
 {
+	int randomNum;
+	cout << "creating a new maze" << endl << '1' << endl;
 	for (int depth = 0; depth < DEPTH_SIZE; depth++)
 	{
 		for (int row = 0; row < ROW_SIZE; row++)
@@ -150,11 +158,13 @@ void Pathfinder::createRandomMaze()
 			{
 				if (col == 0 && row == 0 && depth == 0 || col == 4 && row == 4 && depth == 4){
 					maze_grid[row][col][depth] = 1;
+					maze_backup[row][col][depth] = 1;
 				}
 				else{
-					int randomNum = rand() % 2; 
-
+					randomNum = rand() % 2;
+					cout << randomNum << endl;
 					maze_grid[row][col][depth] = randomNum;
+					maze_backup[row][col][depth] = randomNum;
 				}	
 			}
 		}
